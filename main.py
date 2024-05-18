@@ -20,6 +20,8 @@ async def process_prompt(request: PromptRequest):
         response = process_with_phi3(prompt)
     elif model_type == ModelType.gemini:
         response = process_with_gemini(prompt)
+    elif model_type == ModelType.gemma2b:
+        response = process_with_gemma2b(prompt)
     else:
         raise HTTPException(status_code=404, detail="Invalid Model Type")
 

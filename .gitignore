@@ -1,2 +1,5 @@
 .env
 .idea/
+__pycache/
+models/__pycache__/
+handlers/__pycache__/

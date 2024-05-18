@@ -6,8 +6,12 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 import os
 
+"""
+Environment Setup
+"""
 load_dotenv('../.env')
 GEMINI_API = os.getenv('GEMINI_API_KEY')
+HF_TOKEN = os.getenv('HF_TOKEN')
 
 
 def process_with_mistral(prompt: str) -> str:
@@ -26,7 +30,7 @@ def process_with_phi3(prompt: str) -> str | List[str | Dict]:
     return response.content
 
 
-def process_with_llama3(prompt: str) -> str | list[str | dict]:
+def process_with_llama3(prompt: str) -> str | List[str | Dict]:
     llm = ChatOllama(model=ModelType.llama3)
     messages = [
         HumanMessage(
@@ -42,15 +46,17 @@ def process_with_openai(prompt: str) -> str:
     raise NotImplementedError
 
 
-def process_with_gemma(prompt: str) -> str:
-    raise NotImplementedError
+def process_with_gemma2b(prompt: str) -> str | List[str | Dict]:
+    llm = ChatOllama(model="gemma:2b")
+    messages = [
+        HumanMessage(
+            content=prompt
+        )
+    ]
+    response = llm.invoke(messages)
+
+    return response.content
 
 
 def process_with_gemini(prompt: str) -> str:
-    # genai.configure(api_key=GEMINI_API)
-    # model = genai.GenerativeModel(ModelType.gemini)
-    # response = model.generate_content(prompt)
-    #
-    # return response.text
-
     raise NotImplementedError

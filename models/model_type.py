@@ -6,5 +6,6 @@ class ModelType(str, Enum):
     llama3 = "llama3"
     phi3 = "phi3"
     openai = "openai"
-    gemma = "gemma:2b"
+    gemma2b = "gemma2b"
+    gemma7b = "gemma-7b"
     gemini = "gemini-pro"
