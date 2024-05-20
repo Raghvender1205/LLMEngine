@@ -3,3 +3,5 @@
 __pycache/
 models/__pycache__/
 handlers/__pycache__/
+rag/__pycache__/
+chroma_db/
