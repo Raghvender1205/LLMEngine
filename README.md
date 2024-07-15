@@ -49,3 +49,6 @@ In the `Body` pass, `model_type`, `query` and `file`
 ## TODO
 1. Setup Support for more models
 2. Shift `llama3` support to GroqAPI as it requires a lot of compute.
+3. Add `SelfCorrectiveRAG` support in the API.
+4. Add support for different types of files
+5. Add WebsiteLoader support
