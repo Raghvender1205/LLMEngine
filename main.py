@@ -5,8 +5,12 @@ from models.prompt import PromptRequest, PromptResponse
 from models.rag import RAGRequest, RAGResponse
 from handlers.model_type_handler import *
 from rag.llm_setup import save_embeddings, prepare_prompt
+from loguru import logger
+
+logger.add("logs/debug_logs.log")
 
 app = FastAPI()
+
 
 # Middleware
 app.add_middleware(
@@ -27,6 +31,8 @@ def process_model_response(model_type: ModelType, prompt: str) -> str:
         return process_with_gemini(prompt)
     elif model_type == ModelType.gemma2b:
         return process_with_gemma2b(prompt)
+    elif model_type == ModelType.mixtral:
+        return process_with_mistral(prompt)
     else:
         raise HTTPException(status_code=404, detail="Invalid Model Type")
 
@@ -37,18 +43,9 @@ async def process_prompt(request: PromptRequest):
         raise HTTPException(status_code=404, detail="Prompt cannot be empty")
 
     model_type = request.model_type
+    logger.debug(f"Model Type {model_type}")
     prompt = request.prompt
 
-    # if model_type == ModelType.llama3:
-    #     response = process_with_llama3(prompt)
-    # elif model_type == ModelType.phi3:
-    #     response = process_with_phi3(prompt)
-    # elif model_type == ModelType.gemini:
-    #     response = process_with_gemini(prompt)
-    # elif model_type == ModelType.gemma2b:
-    #     response = process_with_gemma2b(prompt)
-    # else:
-    #     raise HTTPException(status_code=404, detail="Invalid Model Type")
     response = process_model_response(model_type, prompt)
 
     return PromptResponse(response=response)
